@@ -33,3 +33,22 @@ Conclusion
 Ce programme est un modèle très simplifié pour évaluer l'intérêt d'une fusion-acquisition sur la base des seules données financières. Dans la réalité,
 de nombreuses autres considérations doivent être prises en compte, notamment les synergies opérationnelles, les cultures d'entreprise, les marchés, et les aspects réglementaires. 
 Pour une évaluation plus précise, il serait recommandé de consulter des experts financiers et de réaliser une analyse plus approfondie.
+
+---
+
+## Utilisation (version améliorée)
+
+```bash
+python evaluate_merger.py                    # exemple intégré
+python evaluate_merger.py a.json b.json      # vos propres bilans
+python evaluate_merger.py a.json b.json --json
+python -m pytest                             # tests
+```
+
+Bilan JSON : `revenue`, `profit`, `assets`, `liabilities` (obligatoires), `revenue_prev` et `name` (facultatifs).
+
+Correctif principal : dans la version initiale, la « croissance » valait toujours 0
+(`combined / (r1 + r2) - 1`), donc le verdict était toujours négatif. Elle se calcule
+désormais à partir du CA de l'exercice précédent. Ajouts : validation des entrées,
+critère ROA, score pondéré (endettement et marge combinés éliminatoires), seuils
+configurables (`Thresholds`), rapport détaillé, CLI et tests.
